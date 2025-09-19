@@ -1,0 +1,13 @@
+name: PR Comment Test
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  run-on-pr-comment:
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'test-trigger')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show PR comment
+        run: echo "Triggered by PR comment: ${{ github.event.comment.body }}"
