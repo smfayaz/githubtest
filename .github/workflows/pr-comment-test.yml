@@ -1,13 +1,22 @@
-name: PR Comment Test
+name: PR Comment Testing
 
 on:
   issue_comment:
     types: [created]
 
 jobs:
-  run-on-pr-comment:
+  test_pr_comment:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/test')
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'test-trigger') }}
     steps:
-      - name: Show PR comment
-        run: echo "Triggered by PR comment: ${{ github.event.comment.body }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.issue.pull_request.head.ref }} # Checkout the PR's branch
+
+      - name: Run tests
+        run: |
+          echo "Running tests on PR: ${{ github.event.issue.number }}"
+          # Add your testing commands here, e.g.,
+          # npm install
+          # npm test
