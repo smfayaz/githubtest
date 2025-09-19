@@ -6,8 +6,8 @@ on:
 
 jobs:
   run-on-pr-comment:
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'test-trigger') }}
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'test-trigger') }}
     steps:
       - name: Show PR comment
         run: echo "Triggered by PR comment: ${{ github.event.comment.body }}"
